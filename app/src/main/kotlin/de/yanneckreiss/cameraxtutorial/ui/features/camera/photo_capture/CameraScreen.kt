@@ -41,17 +41,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.yanneckreiss.cameraxtutorial.Api.ApiService
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import de.yanneckreiss.cameraxtutorial.R
 import de.yanneckreiss.cameraxtutorial.core.utils.rotateBitmap
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.compose.koinViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.ByteArrayOutputStream
 import java.util.concurrent.Executor
 
 
@@ -65,12 +62,17 @@ fun CameraScreen(
     if (networkError) {
         Alert(viewModel);
     }
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Your existing CameraContent composable...
+        CameraContent(
+            onPhotoCaptured = viewModel::storePhotoInGallery,
+            lastCapturedPhoto = cameraState.capturedImage
+        )
 
-    CameraContent(
-        onPhotoCaptured = viewModel::storePhotoInGallery,
-
-        lastCapturedPhoto = cameraState.capturedImage
-    )
+        // Place LoadingAnimation composable based on isLoading state
+        LottieLoadingAnimation(isLoading = isLoading)
+    }
 
     apiResponse?.let {
         // Display the API response. You might want to format this or handle it differently.
@@ -107,7 +109,6 @@ private fun CameraContent(
     onPhotoCaptured: (Bitmap) -> Unit,
     lastCapturedPhoto: Bitmap? = null,
 ) {
-
     val context: Context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val cameraController: LifecycleCameraController = remember { LifecycleCameraController(context) }
@@ -143,26 +144,40 @@ private fun CameraContent(
         // FAB positioned at the top right, outside and above the bottom navigation
         ExtendedFloatingActionButton(
             text = { Text("Take photo") },
-            onClick = { capturePhoto(context, cameraController, onPhotoCaptured) },
+            onClick = { capturePhoto(context, cameraController, onPhotoCaptured)},
             icon = { Icon(Icons.Default.Camera, "Take Photo") },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(top = 16.dp, end = 16.dp, bottom = 90.dp)
         )
+
 //test
 
         // Simulate the Bottom Navigation bar
     }
 }
 
+@Composable
+fun LottieLoadingAnimation(isLoading: Boolean) {
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animationcorrect))
+            val progress by animateLottieCompositionAsState(
+                composition,
+                iterations = LottieConstants.IterateForever, // Loop indefinitely
+                isPlaying = true, // Play the animation
+                speed = 1.0f, // Play at normal speed
+                restartOnPlay = false // Do not restart the animation each time it’s played
+            )
 
-fun Bitmap.toMultipartBodyPart(): MultipartBody.Part {
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-    val requestBody = byteArrayOutputStream.toByteArray().toRequestBody("image/jpeg".toMediaTypeOrNull())
-    return MultipartBody.Part.createFormData("image", "captured_image.jpg", requestBody)
+            LottieAnimation(
+                composition,
+                progress,
+                modifier = Modifier.size(200.dp) // Adjust size as needed
+            )
+        }
+    }
 }
-
 private fun capturePhoto(
     context: Context,
     cameraController: LifecycleCameraController,
@@ -216,6 +231,7 @@ private fun LastPhotoPreview(
 @Composable
 private fun Preview_CameraContent() {
     CameraContent(
-        onPhotoCaptured = {}
+        onPhotoCaptured = {},
+
     )
 }

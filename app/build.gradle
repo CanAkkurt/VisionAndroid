@@ -65,7 +65,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-compose:2.7.7'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
-
+    //debug
+    debugImplementation "androidx.compose.ui:ui-tooling"
     ///// LIFECYCLE /////
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
@@ -76,10 +77,11 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 // OkHttp Logging Interceptor (useful for debugging API calls)
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
-
+// lottie animation
+    implementation "com.airbnb.android:lottie-compose:4.2.2"
 // Gson for JSON parsing
     implementation "com.google.code.gson:gson:2.8.9"
     //// CAMERA STUFF ////

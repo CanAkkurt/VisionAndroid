@@ -1,21 +1,33 @@
 package de.yanneckreiss.cameraxtutorial.Api
 
+import android.media.Image
 import okhttp3.MultipartBody
 import okhttp3.MultipartBody.*
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.Call
+import retrofit2.Response
+import retrofit2.http.GET
 
 interface ApiService {
 
     data class ApiResponse(
-        val success: Boolean,
-        val message: String,
-        val imageUrl: String? // Optional, assuming it might not be present in all responses
+        val id: Int,
+        val fileName: String,
+        val contentType: String?,
+        val detectionResult: String, // The big string containing all detection results
+        val data: String? // Assuming this could be the base64 encoded image data or null
     )
 
     @Multipart
-    @POST("upload/image")
-    fun uploadImage(@Part image: MultipartBody.Part): Call<ApiResponse>
+    @POST("images")
+    suspend fun  uploadImage(@Part image: MultipartBody.Part): Response<ApiResponse>
+
+
+    @GET("images")
+    suspend fun fetchImages(): List<ApiResponse>
+
+
+
 }

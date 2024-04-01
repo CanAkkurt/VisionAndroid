@@ -47,6 +47,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.yanneckreiss.cameraxtutorial.App
 import de.yanneckreiss.cameraxtutorial.R
+import de.yanneckreiss.cameraxtutorial.ui.ListView.ImagesScreen
 import de.yanneckreiss.cameraxtutorial.ui.bottomnav.BottomNavItem
 import de.yanneckreiss.cameraxtutorial.ui.bottomnav.BottomNavigationT
 import de.yanneckreiss.cameraxtutorial.ui.features.camera.no_permission.NoPermissionScreen
@@ -73,7 +74,7 @@ fun MainScreen() {
 
             }
             composable(route = BottomNavItem.Building.route) { /* Building screen content */ }
-            composable(route = BottomNavItem.Analytics.route) { AnalyticsScreen()/* Analytics screen content */ }
+            composable(route = BottomNavItem.Analytics.route) { ImagesScreen()/* Analytics screen content */ }
             composable(route = BottomNavItem.Profile.route) { /* Profile screen content */ }
             // Add composable functions for other destinations
         }
@@ -94,6 +95,7 @@ private fun MainContent(
     }
 }
 
+
 @Composable
 fun AnalyticsScreen() {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -104,13 +106,40 @@ fun AnalyticsScreen() {
 }
 
 
-@Preview
+//@Preview(showBackground = true)
+//@Composable
+//private fun Preview_MainContent() {
+//    MainContent(
+//        hasPermission = true,
+//        onRequestPermission = {}
+//    )
+//}
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Preview(showBackground = true)
 @Composable
-private fun Preview_MainContent() {
-    MainContent(
-        hasPermission = true,
-        onRequestPermission = {}
-    )
+fun Preview_MainScreen() {
+    MaterialTheme {
+        Scaffold(
+            bottomBar = {
+                // Mock BottomNavigationT with static content for preview
+                BottomNavigation {
+                    BottomNavigationItem(
+                        icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                        label = { Text("Home") },
+                        selected = true,
+                        onClick = {} // No action needed for preview
+                    )
+                }
+            }
+        ) {
+            // Provide static content instead of dynamic content based on NavHost
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Home Screen Content", style = MaterialTheme.typography.h5)
+                // Optionally include other static components for preview
+            }
+        }
+    }
 }
 
 

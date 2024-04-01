@@ -38,4 +38,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Preview
+    @Composable
+    fun SimpleComposable() {
+        MainScreen()
+    }
 }
