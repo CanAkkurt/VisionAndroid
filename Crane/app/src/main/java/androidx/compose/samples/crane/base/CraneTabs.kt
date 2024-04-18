@@ -62,10 +62,10 @@ fun CraneTabBar(
                 contentDescription = stringResource(id = R.string.cd_menu)
             )
             Spacer(Modifier.width(8.dp))
-            Image(
-                painter = painterResource(id = R.drawable.microchip),
-                contentDescription = null
-            )
+//            Image(
+//                painter = painterResource(id = R.drawable.microchip),
+//                contentDescription = null
+//            )
         }
         children(
             Modifier

@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 
 val crane_caption = Color.DarkGray
 val crane_divider_color = Color.LightGray
-private val crane_red = Color(0xFFE30425)
+private val crane_red = Color(0xFF388659)
 private val crane_white = Color.White
-private val crane_purple_700 = Color(0xFF720D5D)
-private val crane_purple_800 = Color(0xFF5D1049)
-private val crane_purple_900 = Color(0xFF4E0D3A)
+private val crane_purple_700 = Color(0xFF52AA5E)
+private val crane_purple_800 = Color(0xFF52AA8A)
+private val crane_purple_900 = Color(0xFFB4E1FF)
 
 val craneColors = lightColors(
     primary = crane_purple_800,

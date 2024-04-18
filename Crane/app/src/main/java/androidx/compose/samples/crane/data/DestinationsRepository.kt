@@ -52,6 +52,12 @@ class DestinationsRepository @Inject constructor(
 
     suspend fun fetchImages(): List<ApiService.ApiResponse> {
         // Ideally handle errors and exceptions here as well
-        return apiService.fetchImages()
+        return try {
+            // Attempt to fetch data from the API
+            return apiService.fetchImages()
+        } catch (e: Exception) {
+          return emptyList();
+        }
+
     }
 }

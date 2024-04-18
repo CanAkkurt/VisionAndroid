@@ -40,7 +40,7 @@ fun LandingScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
         currentOnTimeout()
     }
     Image(
-        painterResource(id = R.drawable.microchip),
+        painterResource(id = R.drawable.ic_launcher_foreground),
         contentDescription = null,
         modifier
             .fillMaxSize()
