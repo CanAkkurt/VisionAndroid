@@ -1,0 +1,47 @@
+/*
+ * Copyright 2020 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package androidx.compose.samples.crane.data
+
+import androidx.compose.runtime.Immutable
+
+@Immutable
+data class City(
+    val name: String,
+    val country: String,
+    val latitude: String,
+    val longitude: String
+) {
+    val nameToDisplay = "$name, $country"
+}
+
+@Immutable
+data class ExploreModel(
+    val city: City,
+    val description: String,
+    val imageUrl: String
+)
+
+@Immutable
+data class ImageData(
+    val id: Int,
+    val fileName: String,
+    val contentType: String?,
+    val detectionResult: String, // The big string containing all detection results
+    val data: String? // Assuming this could be the base64 encoded image data or null
+)
+
+
