@@ -55,14 +55,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import de.yanneckreiss.cameraxtutorial.ui.features.camera.photo_capture.CameraViewModel
 import kotlinx.coroutines.launch
 
 typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
 enum class CraneScreen {
-    Camera, Maps, Details
+    Camera, Galery, Survey
 }
 
 @Composable
@@ -163,7 +162,7 @@ fun CraneHomeContent(
                         }
                     }
 
-                    CraneScreen.Maps -> {
+                    CraneScreen.Galery -> {
                         ExploreSection(
                             widthSize = widthSize,
                             title = stringResource(R.string.explore_properties_by_destination),
@@ -173,7 +172,7 @@ fun CraneHomeContent(
                         )
                     }
 
-                    CraneScreen.Details -> {
+                    CraneScreen.Survey -> {
                        ListViewImages(
                            widthSize = widthSize,
                            title = stringResource(R.string.explore_properties_by_destination),
@@ -254,7 +253,7 @@ private fun SearchContent(
                 )
             )
 
-            CraneScreen.Maps -> SleepSearchContent(
+            CraneScreen.Galery -> SleepSearchContent(
                 widthSize = widthSize,
                 datesSelected = selectedDates,
                 sleepUpdates = SleepSearchContentUpdates(
@@ -264,7 +263,7 @@ private fun SearchContent(
                 )
             )
 
-            CraneScreen.Details -> EatSearchContent(
+            CraneScreen.Survey -> EatSearchContent(
                 widthSize = widthSize,
                 datesSelected = selectedDates,
                 eatUpdates = EatSearchContentUpdates(
